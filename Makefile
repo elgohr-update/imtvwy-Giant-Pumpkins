@@ -36,13 +36,10 @@ doc/result_test : data/processed src/script/evaluate.py
 
 
 # Render final report
-doc/pumpkin.Rmd : doc/result_test doc/result_model doc/result_eda data/processed
+doc/pumpkin.Rmd : doc/result_model doc/result_test doc/result_eda data/processed
 	Rscript -e "rmarkdown::render('doc/pumpkin.Rmd')"
 
 clean:
-	rm -rf data/raw/pumpkins.csv
-	rm -rf data/processed
-	rm -rf doc/result_eda
-	rm -rf doc/result_model
-	rm -rf doc/result_test
+	rm -rf data/*
+	rm -rf doc/result/*
 	
