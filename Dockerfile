@@ -4,7 +4,7 @@
 
 
 # Use rocker/tidyverse as the Base Image
-FROM rocker/tidyverse
+FROM rocker/tidyverse@sha256:d0cd11790cc01deeb4b492fb1d4a4e0d5aa267b595fe686721cfc7c5e5e8a684
 
 # Install R
 RUN apt-get update
@@ -24,15 +24,18 @@ RUN wget --quiet https://repo.anaconda.com/archive/Anaconda3-2019.10-Linux-x86_6
     /opt/conda/bin/conda clean -afy && \
     /opt/conda/bin/conda update -n base -c defaults conda
 
+# Update conda
+RUN /opt/conda/bin/conda update conda
+
 # Install Python Packages
 RUN /opt/conda/bin/conda install -y -c anaconda \
     docopt=0.6.* \
     altair=4.1.* 
 
-# Install pandoc
+# Install pandoc altair_saver
 RUN /opt/conda/bin/conda install -y -c conda-forge pandoc altair_saver
 
 # Put Anaconda Python in PATH
 ENV PATH="/opt/conda/bin:${PATH}"
 
-CMD ["/bin/bash"]
+#CMD ["/bin/bash"]
