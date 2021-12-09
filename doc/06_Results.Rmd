@@ -1,11 +1,58 @@
 ---
-title: "R Notebook"
-output: html_notebook
+title: "Results"
+output:
+  html_document:
+    df_print: paged
+editor_options:
+  markdown:
+    wrap: 72
 ---
+
+```{r read_score, echo=FALSE}
+result <- read_csv("result/cvresults.csv", show_col_types = FALSE)
+best_alpha <- result$best_alpha
+best_score_cv <- result$best_score
+result <- read_csv("result/testscore.csv", show_col_types = FALSE)
+test_score <- result$test_score
+```
+
 # Results and Discussion
 
-- plot_cv.png , test_result.csv,plot_prediction.png
-- CV Result / best hyper parameter
+We found the optimized `alpha` value of our Ridge model be
+`r best_alpha`. In doing so, we were able to achieve a cross validation
+score of `r best_score_cv`.
 
-- Conclusion
-=> better approach (different model)
+```{r hyperparameter_tuning, echo=FALSE, fig.cap="Figure 1. Hyperparameter Tuning for Ridge", out.width = '60%'}
+library(knitr)
+knitr::include_graphics("result/tuning_ridge.png")
+```
+
+Our prediction model performed decently well on the test data as well.
+The testing score we obtained with the testing set is `r test_score`.
+Below graph shows the plot of the predicted weight (lbs) vs actual
+weight (lbs) from the testing data set.
+
+```{r predictin, echo=FALSE, fig.cap="Figure 2. Prediction weights vs Actual weights", out.width = '60%'}
+library(knitr)
+knitr::include_graphics("result/predict_result.png")
+```
+
+## Critique, Limitations and Future Improvements
+
+We faced several limitations in our analysis such as limited types of features
+available for feature engineering and modelling. In addition, many features had 
+to be discarded due to their lack of relevance to our model.
+
+Future studies on this subject can be improved with the inclusion of more relevant
+predictive features, such as using the seed/genetic data of the father and mother,
+and more data. Additionally, further data cleaning methods could
+also be applied, such as inspection and removal of outliers, as these can affect 
+regression model performance significantly.
+
+We were able to create a more accurate model with Random Forest to
+predict weights of giant pumpkins but have opted to use the Ridge model
+instead. We have chosen to do so as the Random Forest model required
+upwards of 5 hours to run which we believe to be impractical and as such
+have decided to use a slightly less accurate but a much faster model. Thus,
+in the future, it could be worth looking into using alternative regression
+models that may provide accurate and timely results.
