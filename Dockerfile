@@ -8,10 +8,8 @@ FROM rocker/tidyverse
 
 # Install R
 RUN apt-get update
-#RUN apt-get install r-base r-base-dev -y
 
 # Install R Packages
-#RUN Rscript -e "install.packages('tidyverse')"
 RUN Rscript -e "install.packages('knitr')"
 
 # Install the Anaconda distribution of Python
